@@ -61,7 +61,7 @@ func broadcastInstanceRestart(m *RestartRequest) {
 }
 
 func notify(m *RestartRequest) {
-	Cluster := strings.Index(m.Brokers[0], ".")
+	Cluster := SplitFirst(m.Brokers[0], ".")
 	str := fmt.Sprintf("[%s] %s(%s) will restart... gracefully!", Cluster, m.Module, m.InstanceId[0:12])
 	args := []string{"-c", "sandbox.babl.sh:4445", "babl/events", "-e", "EVENT=babl:error"}
 	cmd := exec.Command("/bin/babl", args...)
